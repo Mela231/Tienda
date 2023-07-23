@@ -3,6 +3,7 @@ package com.Tienda.controller;
 import com.Tienda.domain.Categoria;
 import com.Tienda.service.CategoriaService;
 import com.Tienda.serviceimpl.FirebaseStorageServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,12 @@ public class CategoriaController {
     CategoriaService categoriaService;
     
     @GetMapping("/listado")
-    public String inicio(Model model) {
+    public String inicio(Model model,HttpSession session) {
         log.info("Consumiendo el recurso /categoria/listado");
         List<Categoria> categorias = categoriaService.getCategorias(false);
         //List<Categoria> categorias = categoriaService.getPorDescripcion("Teclados");
+        String imagen = (String)session.getAttribute("usuarioImagen");
+        model.addAttribute("avatar",imagen);
         model.addAttribute("categorias", categorias);
         model.addAttribute("totalCategorias", categorias.size());
         return "/categoria/listado";
