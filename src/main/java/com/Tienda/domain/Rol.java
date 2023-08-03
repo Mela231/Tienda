@@ -25,6 +25,6 @@ public class Rol implements Serializable {
     @NotEmpty
     private String nombre;
     
-     @Column
+     @Column(name = "id_usuario")
     private Long idUsuario;
 }
